@@ -11,6 +11,7 @@ function writePassword() {
   let charLower = "abcdefghijkmnopqrstuvwxyz";
   let charSpecial = "!#$%&'()*+,-./:;<=>?@[\]^_{|}~"
   let passStable = "";
+  let textPassword = "";
 
   var lenPass = prompt ("How many characters would you like your password to be? [Min = 8, Max = 128]", 8);
   if (lenPass <8){
@@ -102,16 +103,27 @@ function writePassword() {
         if (incSpecial == "Y"){
           passStable = charSpecial;
         } else {
-          passStable = "Invalid Input";
+          passStable = "Invalid Input.";
         }
       }
     }
   }
-
+  if (passStable != "Invalid Input"){
+    for (let i = 0; i < parseInt(lenPass); i++) {
+      textPassword += passStable.charAt(getRandomArbitrary(0, passStable.length-1));
+    }
+  } else {
+    textPassword = passStable;
+  }
  // var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
-  passwordText.value = passStable;
+  passwordText.value = textPassword;
 }
+//Math random generation from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
